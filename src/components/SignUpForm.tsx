@@ -1,12 +1,43 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function SignUpForm() {
+	const [error, setError] = useState<string>("");
+	const [email, setEmail] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
+	const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const {
+			target: {name, value},
+		} = e;
+
+		if (name === 'email') {
+			setEmail(value);
+			const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+			if(!value?.match(validRegex)) {
+				setError('이메일 형식이 올바르지 않습니다.');
+			} else {
+				setError('');
+			}
+		}
+
+		if (name === 'password') {
+
+		}
+
+		if (name === 'passwordConfirm') {
+
+		}
+	}
+
 	return (
 	<form action="/post" method="POST" className="form form--lg">
 		<h1 className="form__title">회원가입</h1>
 		<div className="form__block">
 			<label htmlFor="email">이메일</label>
-			<input type="email" name="email" id="email" required/>
+			<input type="email" name="email" id="email" required onChange={onChange}/>
 		</div>
 		<div className="form__block">
 			<label htmlFor="password">비밀번호</label>

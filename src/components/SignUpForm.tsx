@@ -24,11 +24,27 @@ export default function SignUpForm() {
 		}
 
 		if (name === 'password') {
+			setPassword(value);
 
+			if (value?.length < 8) {
+				setError("비밀번호는 8자리 이상으로 입력해주세요.");
+			} else if (passwordConfirm?.length > 0 && value !== passwordConfirm) {
+				setError("비밀번호와 비밀번호 확인 값이 다릅니다. 다시 확인해주세요.")
+			} else {
+				setError("");
+			}
 		}
 
-		if (name === 'passwordConfirm') {
+		if (name === 'password_confirm') {
+			setPasswordConfirm(value);
 
+			if (value?.length < 8) {
+				setError("비밀번호는 8자리 이상으로 입력해주세요.");
+			} else if (value !== password) {
+				setError("비밀번호와 비밀번호 확인 값이 다릅니다. 다시 확인해주세요.");
+			} else {
+				setError("");
+			}
 		}
 	}
 
@@ -41,12 +57,17 @@ export default function SignUpForm() {
 		</div>
 		<div className="form__block">
 			<label htmlFor="password">비밀번호</label>
-			<input type="password" name="password" id="password" required/>
+			<input type="password" name="password" id="password" required onChange={onChange}/>
 		</div>
 		<div className="form__block">
 			<label htmlFor="password)confirm">비밀번호 확인</label>
-			<input type="password" name="password_confirm" id="password_confirm" required/>
+			<input type="password" name="password_confirm" id="password_confirm" required onChange={onChange}/>
 		</div>
+		{error && error.length > 0 && (
+			<div className="form__block">
+				<div className="form__error">{error}</div>
+			</div>
+		)}
 		<div className="form__block">
 			계정이 이미 있으신가요?
 			<Link to="/login" className="form__link">
@@ -55,7 +76,7 @@ export default function SignUpForm() {
 		</div>
 
 		<div className="form__block">
-			<input type="submit" value="회원가입" className="form__btn--submit"/>
+			<input type="submit" value="회원가입" className="form__btn--submit" disabled={error?.length > 0}/>
 		</div>
 	</form>);
 }

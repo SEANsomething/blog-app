@@ -1,11 +1,23 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { app } from "firebaseApp";
+import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+
 export default function SignUpForm() {
 	const [error, setError] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+
+	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
+		e.preventDefault();
+		try {
+			const auth = getAuth(app);
+		} catch {
+
+		}
+	}
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const {
